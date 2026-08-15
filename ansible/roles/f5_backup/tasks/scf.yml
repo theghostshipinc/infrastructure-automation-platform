@@ -1,0 +1,37 @@
+---
+- name: Create BIG-IP SCF backup
+  f5networks.f5_modules.bigip_command:
+    commands:
+      - "save sys config file {{ f5_backup_scf_filename }} no-passphrase"
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false
+  register: f5_backup_scf_create
+
+- name: Read BIG-IP SCF backup
+  f5networks.f5_modules.bigip_command:
+    commands:
+      - "run /util bash -c 'cat /var/local/scf/{{ f5_backup_scf_filename }}'"
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false
+  register: f5_backup_scf_content
+
+- name: Save BIG-IP SCF backup on automation controller
+  ansible.builtin.copy:
+    content: "{{ f5_backup_scf_content.stdout[0] }}\n"
+    dest: "{{ f5_backup_directory }}/{{ f5_backup_scf_filename }}"
+    mode: "0600"
+
+- name: Report BIG-IP SCF backup
+  ansible.builtin.debug:
+    msg:
+      - "Device: {{ inventory_hostname }}"
+      - "SCF backup: {{ f5_backup_scf_filename }}"
+      - "Location: {{ f5_backup_directory }}/{{ f5_backup_scf_filename }}"

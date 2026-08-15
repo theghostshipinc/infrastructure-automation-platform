@@ -1,0 +1,8 @@
+---
+- name: Backup BIG-IP devices
+  hosts: f5
+  gather_facts: false
+  connection: local
+
+  roles:
+    - f5_backup

@@ -1,0 +1,6 @@
+---
+- name: Run UCS backup tasks
+  ansible.builtin.import_tasks: ucs.yml
+
+- name: Run SCF backup tasks
+  ansible.builtin.import_tasks: scf.yml

@@ -1,0 +1,10 @@
+---
+f5_backup_date: "{{ lookup('pipe', 'date +%Y-%m-%d') }}"
+
+f5_backup_root: "{{ playbook_dir }}/../../backups"
+
+f5_backup_filename: "{{ inventory_hostname }}-{{ f5_backup_date }}.ucs"
+
+f5_backup_scf_filename: "{{ inventory_hostname }}-{{ f5_backup_date }}.scf"
+
+f5_backup_directory: "{{ f5_backup_root }}/{{ inventory_hostname }}/{{ f5_backup_date }}"

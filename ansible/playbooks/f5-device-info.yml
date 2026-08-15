@@ -1,0 +1,22 @@
+---
+- name: Gather BIG-IP device information
+  hosts: f5
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Gather BIG-IP system information
+      f5networks.f5_modules.bigip_device_info:
+        gather_subset:
+          - system-info
+        provider:
+          server: "{{ ansible_host }}"
+          user: "{{ f5_user }}"
+          password: "{{ f5_password }}"
+          server_port: 443
+          validate_certs: false
+      register: bigip_info
+
+    - name: Display BIG-IP system information
+      ansible.builtin.debug:
+        var: bigip_info.system_info

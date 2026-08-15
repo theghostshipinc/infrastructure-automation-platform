@@ -1,0 +1,41 @@
+# Python virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Ansible temporary files
+*.retry
+.ansible/
+
+# Secrets
+*.vault
+*.key
+*.pem
+.env
+
+# Editor / OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Ansible Vault secrets
+ansible/inventories/lab/group_vars/f5/vault.yml
+
+# Generated device backups
+backups/*
+!backups/.gitkeep
+
+# Local Ansible runtime
+.ansible/
+
+# Python / pytest runtime
+.pytest_cache/
+__pycache__/
+*.py[cod]
+
+# Generated sanitized configuration reports
+reports/sanitized-config/*.scf
+!reports/sanitized-config/.gitkeep

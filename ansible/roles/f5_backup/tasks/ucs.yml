@@ -1,0 +1,29 @@
+---
+- name: Create local BIG-IP backup directory
+  ansible.builtin.file:
+    path: "{{ f5_backup_root }}/{{ inventory_hostname }}/{{ f5_backup_date }}"
+    state: directory
+    mode: "0700"
+
+- name: Create and download BIG-IP UCS backup
+  f5networks.f5_modules.bigip_ucs_fetch:
+    src: "{{ f5_backup_filename }}"
+    dest: "{{ f5_backup_root }}/{{ inventory_hostname }}/{{ f5_backup_date }}/{{ f5_backup_filename }}"
+    create_on_missing: true
+    force: true
+    async_timeout: 600
+    mode: "0600"
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false
+  register: f5_backup_ucs_backup
+
+- name: Report BIG-IP UCS backup
+  ansible.builtin.debug:
+    msg:
+      - "Device: {{ inventory_hostname }}"
+      - "Backup: {{ f5_backup_filename }}"
+      - "Location: {{ f5_backup_root }}/{{ inventory_hostname }}/{{ f5_backup_date }}/{{ f5_backup_filename }}"

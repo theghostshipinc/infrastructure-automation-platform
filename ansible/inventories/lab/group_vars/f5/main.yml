@@ -1,0 +1,3 @@
+---
+f5_user: "{{ vault_f5_user }}"
+f5_password: "{{ vault_f5_password }}"

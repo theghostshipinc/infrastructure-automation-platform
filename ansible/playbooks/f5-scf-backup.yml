@@ -1,0 +1,8 @@
+---
+- name: Export BIG-IP SCF backup
+  hosts: f5
+  gather_facts: false
+  connection: local
+
+  roles:
+    - f5_backup

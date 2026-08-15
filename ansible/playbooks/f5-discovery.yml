@@ -1,0 +1,49 @@
+---
+- name: Discover BIG-IP environment
+  hosts: f5
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Gather BIG-IP information
+      f5networks.f5_modules.bigip_device_info:
+        gather_subset:
+          - system-info
+          - devices
+          - device-groups
+          - interfaces
+          - vlans
+          - self-ips
+          - virtual-servers
+          - ltm-pools
+          - nodes
+        provider:
+          server: "{{ ansible_host }}"
+          user: "{{ f5_user }}"
+          password: "{{ f5_password }}"
+          server_port: 443
+          validate_certs: false
+      register: bigip_info
+
+    - name: Show system information
+      ansible.builtin.debug:
+        msg:
+          - "Device: {{ inventory_hostname }}"
+          - "Version: {{ bigip_info.system_info.product_version }}"
+          - "Platform: {{ bigip_info.system_info.marketing_name }}"
+
+    - name: Show HA devices
+      ansible.builtin.debug:
+        var: bigip_info.devices
+
+    - name: Show virtual servers
+      ansible.builtin.debug:
+        var: bigip_info.virtual_servers
+
+    - name: Show pools
+      ansible.builtin.debug:
+        var: bigip_info.ltm_pools
+
+    - name: Show nodes
+      ansible.builtin.debug:
+        var: bigip_info.nodes
