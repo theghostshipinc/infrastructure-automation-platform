@@ -50,8 +50,8 @@ Ansible Core 2.21.3
 F5 environment:
 
 ```text
-ATL-F5-01 - Active
-ATL-F5-02 - Standby
+F5-01 - Active
+F5-02 - Standby
 BIG-IP 16.0.0.1
 ```
 
