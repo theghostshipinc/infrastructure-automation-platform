@@ -1,0 +1,51 @@
+---
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Install Ansible collections
+        run: |
+          ansible-galaxy collection install -r ansible/requirements.yml
+
+      - name: Run Python tests
+        run: |
+          pytest -v
+
+      - name: Run Ansible lint
+        working-directory: ansible
+        run: |
+          ansible-lint playbooks/f5-backup.yml
+          ansible-lint playbooks/f5-device-info.yml
+          ansible-lint playbooks/f5-discovery.yml
+
+      - name: Run Ansible syntax checks
+        working-directory: ansible
+        run: |
+          ansible-playbook --syntax-check playbooks/f5-backup.yml
+          ansible-playbook --syntax-check playbooks/f5-device-info.yml
+          ansible-playbook --syntax-check playbooks/f5-discovery.yml
