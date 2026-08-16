@@ -1,0 +1,65 @@
+---
+- name: Capture BIG-IP inventory snapshot
+  hosts: f5
+  gather_facts: false
+  connection: local
+
+  vars:
+    f5_snapshot_timestamp: "{{ lookup('pipe', 'date -u +%Y%m%dT%H%M%SZ') }}"
+    f5_snapshot_directory: "{{ playbook_dir }}/../../snapshots/f5"
+
+  tasks:
+    - name: Gather BIG-IP inventory data
+      f5networks.f5_modules.bigip_device_info:
+        gather_subset:
+          - system-info
+          - devices
+          - device-groups
+          - interfaces
+          - vlans
+          - self-ips
+          - virtual-servers
+          - ltm-pools
+          - nodes
+        provider:
+          server: "{{ ansible_host }}"
+          user: "{{ f5_user }}"
+          password: "{{ f5_password }}"
+          server_port: 443
+          validate_certs: false
+      register: f5_inventory_snapshot
+
+    - name: Build structured BIG-IP snapshot
+      ansible.builtin.set_fact:
+        f5_snapshot_data:
+          metadata:
+            inventory_hostname: "{{ inventory_hostname }}"
+            management_address: "{{ ansible_host }}"
+            captured_at_utc: "{{ f5_snapshot_timestamp }}"
+            product: "{{ f5_inventory_snapshot.system_info.product_code }}"
+            version: "{{ f5_inventory_snapshot.system_info.product_version }}"
+            platform: "{{ f5_inventory_snapshot.system_info.marketing_name }}"
+          devices: "{{ f5_inventory_snapshot.devices }}"
+          device_groups: "{{ f5_inventory_snapshot.device_groups }}"
+          interfaces: "{{ f5_inventory_snapshot.interfaces }}"
+          vlans: "{{ f5_inventory_snapshot.vlans }}"
+          self_ips: "{{ f5_inventory_snapshot.self_ips }}"
+          virtual_servers: "{{ f5_inventory_snapshot.virtual_servers }}"
+          pools: "{{ f5_inventory_snapshot.ltm_pools }}"
+          nodes: "{{ f5_inventory_snapshot.nodes }}"
+
+    - name: Write BIG-IP inventory snapshot
+      ansible.builtin.copy:
+        content: "{{ f5_snapshot_data | to_nice_json }}\n"
+        dest: "{{ f5_snapshot_directory }}/{{ inventory_hostname }}-{{ f5_snapshot_timestamp }}.json"
+        mode: "0600"
+
+    - name: Report BIG-IP snapshot location
+      ansible.builtin.debug:
+        msg:
+          - "Device: {{ inventory_hostname }}"
+          - "Snapshot captured at: {{ f5_snapshot_timestamp }} UTC"
+          - >-
+            Snapshot:
+            {{ f5_snapshot_directory }}/
+            {{ inventory_hostname }}-{{ f5_snapshot_timestamp }}.json

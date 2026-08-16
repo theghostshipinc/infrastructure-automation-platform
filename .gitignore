@@ -39,3 +39,7 @@ __pycache__/
 # Generated sanitized configuration reports
 reports/sanitized-config/*.scf
 !reports/sanitized-config/.gitkeep
+
+# Runtime infrastructure snapshots
+snapshots/f5/*.json
+!snapshots/f5/.gitkeep
