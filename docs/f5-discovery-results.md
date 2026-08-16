@@ -14,8 +14,8 @@ No configuration changes are made during execution.
 
 | Device | Management IP | Version | HA State | ConfigSync |
 |---------|---------------|----------|----------|------------|
-| ATL-F5-01 | 10.10.10.10 | 16.0.0.1 | Active | 10.10.13.2 |
-| ATL-F5-02 | 10.10.10.9 | 16.0.0.1 | Standby | 10.10.13.3 |
+| F5-01 | 10.10.10.10 | 16.0.0.1 | Active | 10.10.13.2 |
+| F5-02 | 10.10.10.9 | 16.0.0.1 | Standby | 10.10.13.3 |
 
 ---
 

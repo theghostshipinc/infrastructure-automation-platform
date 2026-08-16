@@ -189,12 +189,12 @@ The first implemented automation domain is F5 BIG-IP.
 The environment contains an Active / Standby BIG-IP HA pair.
 
 ```text
-ATL-F5-01
+F5-01
 Management: 10.10.10.10
 State: Active
 ConfigSync: 10.10.13.2
 
-ATL-F5-02
+F5-02
 Management: 10.10.10.9
 State: Standby
 ConfigSync: 10.10.13.3
