@@ -1,6 +1,7 @@
 # Infrastructure Automation Platform
 
 [![Release](https://img.shields.io/badge/release-v0.1.0-0A66C2)](https://github.com/theghostshipinc/infrastructure-automation-platform/releases/tag/v0.1.0)
+[![CI](https://github.com/theghostshipinc/infrastructure-automation-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/theghostshipinc/infrastructure-automation-platform/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Ansible](https://img.shields.io/badge/Ansible-2.21-EE0000?logo=ansible&logoColor=white)](https://www.ansible.com/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
