@@ -1,0 +1,7 @@
+---
+- name: Configure web server tier
+  hosts: webservers
+  gather_facts: true
+
+  roles:
+    - webserver

@@ -1,0 +1,23 @@
+---
+- name: Ensure Apache is installed
+  become: true
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+    update_cache: true
+
+- name: Ensure Apache is enabled and running
+  become: true
+  ansible.builtin.service:
+    name: apache2
+    state: started
+    enabled: true
+
+- name: Deploy server-specific landing page
+  become: true
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: "0644"
