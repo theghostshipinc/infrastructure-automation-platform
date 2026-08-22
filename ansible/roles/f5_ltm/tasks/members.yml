@@ -1,0 +1,16 @@
+---
+- name: Add Project 002 web pool members
+  f5networks.f5_modules.bigip_pool_member:
+    pool: "{{ f5_ltm_pool_name }}"
+    name: "{{ item }}"
+    address: "{{ hostvars[item].application_ip }}"
+    port: "{{ hostvars[item].application_port }}"
+    partition: "{{ f5_ltm_partition }}"
+    state: present
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false
+  loop: "{{ groups['webservers'] }}"

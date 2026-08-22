@@ -1,0 +1,15 @@
+---
+- name: Create Project 002 HTTP monitor
+  f5networks.f5_modules.bigip_monitor_http:
+    name: "{{ f5_ltm_monitor_name }}"
+    partition: "{{ f5_ltm_partition }}"
+    send: "{{ f5_ltm_monitor_send }}"
+    receive: "{{ f5_ltm_monitor_receive }}"
+    interval: 5
+    timeout: 16
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false

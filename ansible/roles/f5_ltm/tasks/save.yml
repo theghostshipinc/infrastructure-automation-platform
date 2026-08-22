@@ -1,0 +1,10 @@
+---
+- name: Save BIG-IP running configuration
+  f5networks.f5_modules.bigip_config:
+    save: true
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false

@@ -1,0 +1,19 @@
+---
+- name: Create Project 002 HTTP virtual server
+  f5networks.f5_modules.bigip_virtual_server:
+    name: "{{ f5_ltm_virtual_name }}"
+    partition: "{{ f5_ltm_partition }}"
+    destination: "{{ f5_ltm_virtual_address }}"
+    port: "{{ f5_ltm_virtual_port }}"
+    pool: "{{ f5_ltm_pool_name }}"
+    profiles:
+      - http
+      - tcp
+    snat: automap
+    state: present
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false

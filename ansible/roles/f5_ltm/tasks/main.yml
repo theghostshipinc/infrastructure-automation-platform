@@ -1,0 +1,15 @@
+---
+- name: Create HTTP monitor
+  ansible.builtin.import_tasks: monitor.yml
+
+- name: Create application pool
+  ansible.builtin.import_tasks: pool.yml
+
+- name: Add application pool members
+  ansible.builtin.import_tasks: members.yml
+
+- name: Create application virtual server
+  ansible.builtin.import_tasks: virtual.yml
+
+- name: Save BIG-IP configuration
+  ansible.builtin.import_tasks: save.yml

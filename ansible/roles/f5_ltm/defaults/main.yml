@@ -1,0 +1,13 @@
+---
+f5_ltm_partition: Common
+
+f5_ltm_monitor_name: project002-http-monitor
+f5_ltm_monitor_send: "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n"
+f5_ltm_monitor_receive: "200 OK"
+
+f5_ltm_pool_name: project002-web-pool
+f5_ltm_pool_lb_method: round-robin
+
+f5_ltm_virtual_name: project002-web-vip
+f5_ltm_virtual_address: 10.10.12.100
+f5_ltm_virtual_port: 80

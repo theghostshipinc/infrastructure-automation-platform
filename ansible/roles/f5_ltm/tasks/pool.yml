@@ -1,0 +1,15 @@
+---
+- name: Create Project 002 web pool
+  f5networks.f5_modules.bigip_pool:
+    name: "{{ f5_ltm_pool_name }}"
+    partition: "{{ f5_ltm_partition }}"
+    lb_method: "{{ f5_ltm_pool_lb_method }}"
+    monitors:
+      - "{{ f5_ltm_monitor_name }}"
+    monitor_type: and_list
+    provider:
+      server: "{{ ansible_host }}"
+      user: "{{ f5_user }}"
+      password: "{{ f5_password }}"
+      server_port: 443
+      validate_certs: false
